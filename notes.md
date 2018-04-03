@@ -90,10 +90,3 @@ to evaluate "cy+324". This gives an idea about how the parser operates.
 * In other cases, the parser converts the statements into byte-code
 * In the case of a compiler, it then hands them to the Code Generator to convert into machine code instructions
 * If you want a compiler for a different CPU or architecture, all you have to do is put a new code generator unit to translate the byte code into machine code for the new CPU
-
-
-
-
-
-
-
