@@ -71,15 +71,15 @@ Parser: Give me the next token <br>
 Lexer : Next token is "cx" which is a variable. <br>
 Parser: Ok, I have "cx" as a declared integer variable. Give me next token <br>
 Lexer : Next token is "=", the assignment operator. <br>
-Parser: Ok, the program wants me to assign something to "cx". Next token <br> 
-     Lexer: The next token is "cy" which is a variable. <br>
-     Parser: Ok, I know "cy" is an integer variable. Next token please <br>
-     Lexer: The next token is '+', which is an addition operator. <br>
-     Parser: Ok, so I need to add something to the value in "cy". Next token please. <br>
-         Lexer: The next token is "324", which is an integer. <br>
-         Parser: Ok, both "cy" and "324" are integers, so I can add them. Next token please: <br>
-         Lexer: The next token is ";" which is end of statement. <br>
-     Parser: Ok, I will evaluate "cy + 324" and get the answer <br>
+Parser: Ok, the program wants me to assign something to "cx". Next token <br>  &nbsp;&nbsp;
+&nbsp;Lexer: The next token is "cy" which is a variable. <br>
+&nbsp;Parser: Ok, I know "cy" is an integer variable. Next token please <br>
+&nbsp;Lexer: The next token is '+', which is an addition operator. <br>
+&nbsp;Parser: Ok, so I need to add something to the value in "cy". Next token please. <br>
+&nbsp;&nbsp;Lexer: The next token is "324", which is an integer. <br>
+&nbsp;&nbsp;Parser: Ok, both "cy" and "324" are integers, so I can add them. Next token please: <br>
+&nbsp;&nbsp;Lexer: The next token is ";" which is end of statement. <br>
+&nbsp;Parser: Ok, I will evaluate "cy + 324" and get the answer <br>
 Parser: I'll take the answer from "cy + 324" and assign it to "cx" <br>
 ------------------------------------------------------------------------------------
 In the section above, the **indenting** shows a subprocess that the parsers enters
