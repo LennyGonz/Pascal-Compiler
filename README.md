@@ -9,7 +9,9 @@ For the implementation of the scanner,and parser I am going to use:
 
 # How does an interpreter/compiler work?
 
-A very simple form of a compiler/interpreter:  Source File ==> Scanner ==> Lexer ==> Parser ==> Interpreter/Code Generator
+A very simple form of a compiler/interpreter:
+
+Source File ==> Scanner ==> Lexer ==> Parser ==> Interpreter/Code Generator
 
 1. **Source File**: This is the program that is read by the interpreter/compiler. This is the text that needs to be compiled or interpreted.
 
@@ -26,16 +28,13 @@ A very simple form of a compiler/interpreter:  Source File ==> Scanner ==> Lexer
 	* token types
 
 <pre>
-```python
 cx = cy + 324;
 print "value of cx is ", cx;
-```
 </pre>
 
 **A lexer would break it like this**:
 
 <pre>
-```python
 cx                 --> Identifier       (variable)
 =                  --> Symbol           (assignment operator)
 cy                 --> Identifier       (variable)
@@ -46,7 +45,6 @@ print              --> Identifier       (keyword)
 "value of cx is "  --> String Constant  (string)
 ,                  --> Symbol           (string concatentation operator)
 cx                 --> Identifier       (variable)
-```
 </pre>
 
 * The lexer calls the **scanner** to pass it **one character at a time**
@@ -83,7 +81,6 @@ Parser: Ok, the program wants me to assign something to "cx". Next token <br>
          Lexer: The next token is ";" which is end of statement. <br>
      Parser: Ok, I will evaluate "cy + 324" and get the answer <br>
 Parser: I'll take the answer from "cy + 324" and assign it to "cx" <br>
-
 ------------------------------------------------------------------------------------
 In the section above, the **indenting** shows a subprocess that the parsers enters
 to evaluate "cy+324". This gives an idea about how the parser operates.
