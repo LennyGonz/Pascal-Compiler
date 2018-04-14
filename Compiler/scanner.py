@@ -96,7 +96,56 @@ TOKEN_RESERVED = TOKEN_NAME_PREFIX + 'RESERVED'
 
 string_store = set()
 
-#----------
+#-------------------------------------------------------------
+# Token Object Class -- Reads source program and build tokens 
+#-------------------------------------------------------------
 
 class Scanner(object):
-    pass
+    def __init__(self,value_of,type_of,row,column):
+        self.row      = row
+        self.column   = column
+        self.type_of  = type_of
+        self.value_of = value_of
+    
+    def __unicode__(self):
+        return '<%s,%s,%i,%i>' % (self.value_of,self.type_of,self.row,self.column)
+    
+    def __repr__(self):
+        return self.__unicode__()
+
+def token_name(suffix):
+    # Returns token prefix + given suffix
+    return TOKEN_NAME_PREFIX + suffix.upper()
+
+# Store reserved words with some system variables
+reserved_tokens = {
+    'char'   : TOKEN_DATA_TYPE_CHAR,
+    'real'   : TOKEN_DATA_TYPE_REAL,
+    'integer': TOKEN_DATA_TYPE_INT,
+    'boolean': TOKEN_DATA_TYPE_BOOL
+                  }
+for keyword, value in symbol_map.items():
+    if value == RESERVED:
+        reserved_tokens[keyword.lower()] = TOKEN_RESERVED
+        reserved_tokens[keyword.upper()] = TOKEN_RESERVED
+
+# Operators dictionary
+operators_classifications = {
+    '<=': TOKEN_OPERATOR_LTE,
+    '>=': TOKEN_OPERATOR_GTE,
+    '+' : TOKEN_OPERATOR_PLUS,
+    ',' : TOKEN_OPERATOR_COMMA,
+    ':' : TOKEN_OPERATOR_COLON,
+    '-' : TOKEN_OPERATOR_MINUS,
+    '/' : TOKEN_OPERATOR_DIVISION,
+    '=' : TOKEN_OPERATOR_EQUALITY,
+    '<>': TOKEN_OPERATOR_NOT_EQUAL,
+    ':=': TOKEN_OPERATOR_ASSIGNMENT,
+    '(' : TOKEN_OPERATOR_LEFT_PAREN,
+    ')' : TOKEN_OPERATOR_RIGHT_PAREN,
+    '[' : TOKEN_OPERATOR_LEFT_BRACKET,
+    '<' : TOKEN_OPERATOR_LEFT_CHEVRON,
+    '>' : TOKEN_OPERATOR_RIGHT_CHEVRON,
+    ']' : TOKEN_OPERATOR_RIGHT_BRACKET,
+    '*' : TOKEN_OPERATOR_MULTIPLICATION
+                                }
