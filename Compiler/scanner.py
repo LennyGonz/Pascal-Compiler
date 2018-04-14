@@ -96,5 +96,7 @@ TOKEN_RESERVED = TOKEN_NAME_PREFIX + 'RESERVED'
 
 string_store = set()
 
-class Token(object):
+#----------
+
+class Scanner(object):
     pass
