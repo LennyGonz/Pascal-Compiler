@@ -5,8 +5,6 @@ This is a Pascal compiler built using Python, for Compiler Construction
 For the implementation of the scanner,and parser I am going to use:
 * Pretty Tables: Library for printing ascii tables, useful for formatting debug statements and generated tokens to console
 
-# Features for implementation:
-
 # How does an interpreter/compiler work?
 
 A very simple form of a compiler/interpreter:
@@ -112,3 +110,8 @@ to evaluate "cy+324". This gives an idea about how the parser operates.
 * [Top Down Recursive Parsing](https://www.cs.duke.edu/~raw/cps218/Handouts/TDRD.htm)
 * [Pascal Grammar](https://www.cs.utexas.edu/users/novak/grammar.html)
 
+## Scripts
+'scanner.py'
+'parser.py'
+'simulator.py'
+'emulator.py'
