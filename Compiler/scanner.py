@@ -179,9 +179,6 @@ def case_quote(text_segment, row, column):
 #          Function for handling Comments
 #-------------------------------------------------------- 
 def case_comment(text_segment):
-    """
-    Handles case comment
-    """
     index = 0
     word = ''
     while index < len(text_segment):
@@ -196,9 +193,6 @@ def case_comment(text_segment):
             index += 1
 
 def case_comment_inline(text_segment):
-    """
-    Handles inline comments
-    """
     index = 0
     word = ''
     while index < len(text_segment):
@@ -372,3 +366,41 @@ def get_token(pascal_file):
             raise Exception('Unknown symbol: %s (ln %i, col %i)' % (pascal_file.contents[index], row, column))
     token_list.append(Scanner('EOF', TOKEN_EOF, row, column))
     return token_list
+ 
+'''
+pushi = push immediate
+
+E,T,F return type
+
+F --> id | lit | + F | -F|(E)|...
+I,R,B,C
+^-------- TYPE F() {
+    if(curtoken == TK-A-VAR)
+        // return type from symtab, generate push
+    
+    elif(curtoken == TK_INTLIT)
+        // type = I, generate pushi (push immediate)
+    
+    elif(curtoken == TK_LP)
+        {
+            gettoken();
+            type t = E(); match(tk_rp);
+            return t;
+        }
+}
+
+you need a table for all operators
+
+
+if we have an expressions 
+    1 + 3.14
+
+step 1) push immediate 1
+step 2) push immediate 3.14
+step 3) generate the code (xchg - cvr - fadd)
+
+[ pushi |   1   |  pushi  |   3.14   |xchg|cvr|fadd|halt]  * result on stack unbalanced
+
+you need to keep track of data types, -- your ints and reals are the same size
+
+'''
