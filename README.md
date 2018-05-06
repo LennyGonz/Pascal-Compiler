@@ -107,7 +107,3 @@ to evaluate "cy+324". This gives an idea about how the parser operates.
 * If you want a compiler for a different CPU or architecture, all you have to do is put a new code generator unit to translate the byte code into machine code for the new CPU
 
 ## Scripts
-'scanner.py'
-'parser.py'
-'simulator.py'
-'emulator.py'
