@@ -1,15 +1,14 @@
 # coding=utf-8
-
+import os
 #--------------------------------------
 #               Scanner                
 #--------------------------------------
+'''
 
-import os
-
+'''
 #----------------------------------------------
 # Initial setup for symbol & reserved keywords
 #----------------------------------------------
-
 LETTER = 0
 RESERVED = 1
 SPACE = 2
@@ -25,15 +24,9 @@ NEGATIVE = 10
 ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 OPERATORS = '+-/,()<>:=*[]'
 
-symbol_map = {' ': SPACE,
-              '\t': SPACE,
-              '\r': SPACE,
-              '\n': EOL,
-              '\'': QUOTE,
-              '.': DOT,
-              '{': COMMENT,
-              ';': SEMICOLON,
-              '-': NEGATIVE
+symbol_map = {' ': SPACE,'\t': SPACE,'\r': SPACE,
+              '\n': EOL,'\'' : QUOTE, '.': DOT,
+              '{': COMMENT,';': SEMICOLON,'-': NEGATIVE
              }
 
 for character in ALPHABET:
@@ -402,5 +395,4 @@ step 3) generate the code (xchg - cvr - fadd)
 [ pushi |   1   |  pushi  |   3.14   |xchg|cvr|fadd|halt]  * result on stack unbalanced
 
 you need to keep track of data types, -- your ints and reals are the same size
-
 '''
