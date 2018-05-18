@@ -7,9 +7,9 @@ import os
 '''
 __future__  is only so that this code can be run whilist using Python 2 or Python 3
 '''
-from Compiler.scanner import get_token
-from Compiler.emulator import Emulator
-from Compiler.parser import Parser
+from scanner import get_token
+from emulator import Emulator
+from parser import Parser
 '''
 This will read the Pascal files from the Sample Pascal Code files I have
 '''
