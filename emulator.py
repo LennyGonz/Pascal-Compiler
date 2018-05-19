@@ -5,7 +5,6 @@ Emulator for pascal compiled code
 from constants import OPCODE, byte_unpacker, bits_to_float
 import sys
 
-
 class Emulator(object):
     """
     Emulator for Parser generated binary code
@@ -139,7 +138,7 @@ class Emulator(object):
             self.start()
         else:
             print 'Stack', self.stack
-            raise Exception('Emulator lacks support for opcode %i' % op)
+            raise PascalError('Emulator lacks support for opcode %i' % op)
 
     def pushi(self):
         self.ip += 1

@@ -64,6 +64,10 @@ INSTRUCTION_LENGTH = 5
 
 
 def float_to_bits(floaty):
+    """
+    :param floaty:
+    :return:
+    """
     s = struct.pack('>f', floaty)
     return struct.unpack('>l', s)[0]
 

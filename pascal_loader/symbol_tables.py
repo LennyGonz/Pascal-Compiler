@@ -1,5 +1,8 @@
 # coding=utf-8
 
+
+# Notations from: http://www.cs.cornell.edu/courses/cs412/2008sp/lectures/lec12.pdf
+
 TYPE_VARIABLE = 'var'  # var a;
 TYPE_FUNCTION = 'func'  # (a + 1) == 2
 TYPE_PROCEDURE = 'pro'
@@ -20,6 +23,7 @@ class SymbolObject(object):
     """
     def __init__(self, name, type_of_object, data_type, dp=None, attribute=None, others=None):
         """
+
         :param name: str
         :param type_of_object: str
         :param data_type: str
@@ -44,3 +48,4 @@ class SymbolObject(object):
 
     def __repr__(self):
         return '<%s, %s, %i, %s>' % (self.name, self.type_of_object, self.dp, self.data_type)
+
