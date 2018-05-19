@@ -43,4 +43,4 @@ for digit in range(0, 10):
 with open(os.path.join(__name__, 'keywords.txt')) as keyword_file:
     for line in keyword_file.readlines():
         # Read every line while stripping whitespace and store reserved keywords
-symbol_map[line.strip()] = RESERVED
+        symbol_map[line.strip()] = RESERVED
