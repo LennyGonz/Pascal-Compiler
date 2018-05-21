@@ -4,7 +4,7 @@ from __future__ import absolute_import
 import pprint
 
 from tokenizer import get_token # scanner
-from pascal_loader.main_io import PascalFile
+from Pascal_Helper_Files.pascal_reader import PascalFile
 from parse import Parser # parser
 from emulator import Emulator # emulator
 

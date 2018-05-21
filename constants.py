@@ -55,13 +55,10 @@ class OPCODE(object):
     RET_AND_PRINT = 38
     PRINT_STR_LIT = 39
 
-
 class TYPE(object):
     I, R, B, C, S = range(5)
 
-
 INSTRUCTION_LENGTH = 5
-
 
 def float_to_bits(floaty):
     """
@@ -71,15 +68,12 @@ def float_to_bits(floaty):
     s = struct.pack('>f', floaty)
     return struct.unpack('>l', s)[0]
 
-
 def bits_to_float(bits):
     s = struct.pack('>l', bits)
     return struct.unpack('>f', s)[0]
 
-
 def byte_unpacker(byte_list):
     return (byte_list[0] << 24) | (byte_list[1] << 16) | (byte_list[2] << 8) | (byte_list[3])
-
 
 def byte_packer(value_to_pack):
     """
@@ -94,7 +88,6 @@ def byte_packer(value_to_pack):
 
     return (value_to_pack >> 24) & 0xFF, (value_to_pack >> 16) & 0xFF, (
         value_to_pack >> 8) & 0xFF, value_to_pack & 0xFF
-
 
 CONDITIONALS = {
     '<': True,

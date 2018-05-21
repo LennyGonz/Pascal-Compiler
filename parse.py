@@ -1,6 +1,5 @@
 # coding=utf-8
-from pascal_loader import PascalError
-import pascal_loader.symbol_tables as symbol_tables
+import Pascal_Helper_Files.symbol_tables as symbol_tables
 import tokenizer
 from constants import OPCODE, CONDITIONALS, byte_packer, byte_unpacker
 
@@ -44,7 +43,7 @@ class Parser(object):
             except StopIteration:
                 return
         else:
-            raise PascalError('Token mismatch, got: %s and current: %s (%i, %i)' % (str(token_type),
+            raise Exception('Token mismatch, got: %s and current: %s (%i, %i)' % (str(token_type),
                                                                                     str(self.current_token),
                                                                                     self.current_token.row,
                                                                                     self.current_token.column))
@@ -98,7 +97,7 @@ class Parser(object):
         while self.current_token.type_of == tokenizer.TOKEN_ID:
             # should not be present in the current symbol table
             if self.current_token.value_of in declarations:
-                raise PascalError('Variable already declared: %s (%i, %i)' % (self.current_token.value_of,
+                raise Exception('Variable already declared: %s (%i, %i)' % (self.current_token.value_of,
                                                                               self.current_token.row,
                                                                               self.current_token.column))
             declarations.append(self.current_token.value_of)
@@ -124,7 +123,7 @@ class Parser(object):
             self.match('TK_ARRAY')
             data_type = tokenizer.TOKEN_DATA_TYPE_ARRAY
         else:
-            raise PascalError('%s data type is invalid (%i, %i)' % (self.current_token.type_of,
+            raise Exception('%s data type is invalid (%i, %i)' % (self.current_token.type_of,
                                                                     self.current_token.row,
                                                                     self.current_token.column))
         if data_type == tokenizer.TOKEN_DATA_TYPE_ARRAY:
@@ -147,7 +146,7 @@ class Parser(object):
                 self.match(tokenizer.TOKEN_DATA_TYPE_BOOL)
                 assignment_type = tokenizer.TOKEN_DATA_TYPE_BOOL
             else:
-                raise PascalError('Array of type <%s> is not valid.' % self.current_token.type_of)
+                raise Exception('Array of type <%s> is not valid.' % self.current_token.type_of)
             self.match(tokenizer.TOKEN_SEMICOLON)
             attributes = {
                 'left': extractor['left'],
@@ -166,7 +165,7 @@ class Parser(object):
             elif extractor['access_type'] == tokenizer.TOKEN_DATA_TYPE_CHAR:
                 pass
             else:
-                raise PascalError('Array access type of %s is not allowed.' % extractor['access_type'])
+                raise Exception('Array access type of %s is not allowed.' % extractor['access_type'])
 
         else:
             self.match(tokenizer.TOKEN_SEMICOLON)
@@ -234,7 +233,7 @@ class Parser(object):
     def find_name_or_error(self):
         symbol = self.find_name_in_symbol_table(self.current_token.value_of)
         if symbol is None:
-            raise PascalError('Variable %s is not declared (%i, %i)' % (self.current_token.value_of,
+            raise Exception('Variable %s is not declared (%i, %i)' % (self.current_token.value_of,
                                                                         self.current_token.row,
                                                                         self.current_token.column))
         else:
@@ -259,7 +258,7 @@ class Parser(object):
             self.generate_op_code(OPCODE.POP)
             self.generate_address(symbol.dp)
         else:
-            raise PascalError('Type mismatch %s != %s' % (lhs_type, rhs_type))
+            raise Exception('Type mismatch %s != %s' % (lhs_type, rhs_type))
 
     def e(self):
         t1 = self.t()
@@ -348,13 +347,13 @@ class Parser(object):
             self.match('TK_FALSE')
             return tokenizer.TOKEN_DATA_TYPE_BOOL
         else:
-            raise PascalError('f() does not support %s, %s' % (self.current_token.value_of, token_type))
+            raise Exception('f() does not support %s, %s' % (self.current_token.value_of, token_type))
 
     def condition(self):
         t1 = self.e()
         value_of = self.current_token.value_of
         if CONDITIONALS.get(value_of) is None:
-            raise PascalError("Expected conditional, got: %s" % value_of)
+            raise Exception("Expected conditional, got: %s" % value_of)
         else:
             type_of = self.current_token.type_of
             self.match(type_of)
@@ -442,7 +441,7 @@ class Parser(object):
                 self.generate_op_code(OPCODE.FADD)
                 return tokenizer.TOKEN_DATA_TYPE_REAL
             else:
-                raise PascalError('Unable to match operation + with types: ' + t1 + ' and ' + t2)
+                raise Exception('Unable to match operation + with types: ' + t1 + ' and ' + t2)
         elif op == tokenizer.TOKEN_OPERATOR_MINUS:
             if t1 == tokenizer.TOKEN_DATA_TYPE_INT and t2 == tokenizer.TOKEN_DATA_TYPE_INT:
                 self.generate_op_code(OPCODE.SUB)
@@ -461,7 +460,7 @@ class Parser(object):
                 self.generate_op_code(OPCODE.FSUB)
                 return tokenizer.TOKEN_DATA_TYPE_REAL
             else:
-                raise PascalError('Unable to match operation - with types: ' + t1 + ' and ' + t2)
+                raise Exception('Unable to match operation - with types: ' + t1 + ' and ' + t2)
         elif op == tokenizer.TOKEN_OPERATOR_DIVISION:
             if t1 == t2:
                 if t1 == tokenizer.TOKEN_DATA_TYPE_INT:
@@ -483,13 +482,13 @@ class Parser(object):
                 self.generate_op_code(OPCODE.FDIVIDE)
                 return t1
             else:
-                raise PascalError('Unable to match operation / with types: ' + t1 + ' and ' + t2)
+                raise Exception('Unable to match operation / with types: ' + t1 + ' and ' + t2)
         elif op == 'TK_DIV':
             if t1 == tokenizer.TOKEN_DATA_TYPE_INT and t2 == tokenizer.TOKEN_DATA_TYPE_INT:
                 self.generate_op_code(OPCODE.DIV)
                 return tokenizer.TOKEN_DATA_TYPE_INT
             else:
-                raise PascalError('Unable to match operation div with types: ' + t1 + ' and ' + t2)
+                raise Exception('Unable to match operation div with types: ' + t1 + ' and ' + t2)
         elif op == tokenizer.TOKEN_OPERATOR_MULTIPLICATION:
             if t1 == tokenizer.TOKEN_DATA_TYPE_INT and t2 == tokenizer.TOKEN_DATA_TYPE_INT:
                 self.generate_op_code(OPCODE.MULTIPLY)
@@ -508,13 +507,13 @@ class Parser(object):
                 self.generate_op_code(OPCODE.FMULTIPLY)
                 return tokenizer.TOKEN_DATA_TYPE_REAL
             else:
-                raise PascalError('Unable to match operation * with types: ' + t1 + ' and ' + t2)
+                raise Exception('Unable to match operation * with types: ' + t1 + ' and ' + t2)
         elif op == 'TK_OR':
             if t1 == tokenizer.TOKEN_DATA_TYPE_BOOL and t2 == tokenizer.TOKEN_DATA_TYPE_BOOL:
                 self.generate_op_code(OPCODE.OR)
                 return tokenizer.TOKEN_DATA_TYPE_BOOL
             else:
-                raise PascalError('Unable to match operation or with types: ' + t1 + ' and ' + t2)
+                raise Exception('Unable to match operation or with types: ' + t1 + ' and ' + t2)
         elif op == tokenizer.TOKEN_OPERATOR_GTE:
             return boolean(OPCODE.GTE, t1, t2)
         elif op == tokenizer.TOKEN_OPERATOR_LTE:
@@ -528,7 +527,7 @@ class Parser(object):
         elif op == tokenizer.TOKEN_OPERATOR_RIGHT_CHEVRON:
             return boolean(OPCODE.LES, t1, t2)
         else:
-            raise PascalError('Emit failed to match %s' % op)
+            raise Exception('Emit failed to match %s' % op)
 
     def write_line_statement(self):
         self.match('TK_WRITELN')
@@ -558,7 +557,7 @@ class Parser(object):
                 elif expression == tokenizer.TOKEN_DATA_TYPE_ARRAY:
                     self.generate_op_code(OPCODE.RETRIEVE)
                 else:
-                    raise PascalError('writeln does not support ' + str(symbol))
+                    raise Exception('writeln does not support ' + str(symbol))
             if self.current_token.type_of == tokenizer.TOKEN_DATA_TYPE_INT:
                 self.generate_op_code(OPCODE.PRINT_ILIT)
                 self.generate_address(int(self.current_token.value_of))
@@ -579,7 +578,7 @@ class Parser(object):
                 self.match(tokenizer.TOKEN_STRING_LIT)
 
             # else:
-            #     raise PascalError('writeln does not support %s', self.current_token.value_of)
+            #     raise Exception('writeln does not support %s', self.current_token.value_of)
             type_of = self.current_token.type_of
             if type_of == tokenizer.TOKEN_OPERATOR_COMMA:
                 self.match(tokenizer.TOKEN_OPERATOR_COMMA)
@@ -588,7 +587,7 @@ class Parser(object):
                 self.generate_op_code(OPCODE.NEW_LINE)
                 return
             else:
-                raise PascalError('Expected comma or right paren, found: %s' % self.current_token.type_of)
+                raise Exception('Expected comma or right paren, found: %s' % self.current_token.type_of)
 
     def repeat_statement(self):
         """
@@ -712,7 +711,7 @@ class Parser(object):
         checker = self.current_token
         e1 = self.e()
         if e1 == tokenizer.TOKEN_DATA_TYPE_REAL:
-            raise PascalError('Real type not allowed for case: ' + e1)
+            raise Exception('Real type not allowed for case: ' + e1)
         self.match(tokenizer.TOKEN_OPERATOR_RIGHT_PAREN)
         self.match('TK_OF')
         hole_list = []
@@ -760,14 +759,14 @@ class Parser(object):
         payload = {}
         split = token.value_of.split('..')
         if len(split) != 2:
-            raise PascalError('Unexpected range for array, expected in form of 0..2, got ' + self.current_token)
+            raise Exception('Unexpected range for array, expected in form of 0..2, got ' + self.current_token)
         left, right = split[0], split[1]
         # figure out data type
         if left.isalpha():
             if right.isalpha():
                 payload['access_type'] = tokenizer.TOKEN_DATA_TYPE_CHAR
             else:
-                raise PascalError('Array range mismatch, %s %s' % (left, right))
+                raise Exception('Array range mismatch, %s %s' % (left, right))
         else:
             # check for float/int
             if left.__contains__('.'):
@@ -775,7 +774,7 @@ class Parser(object):
                     left, right = float(left), float(right)
                     payload['data_type'] = tokenizer.TOKEN_DATA_TYPE_REAL
                 else:
-                    raise PascalError('Array range mismatch, %s %s' % (left, right))
+                    raise Exception('Array range mismatch, %s %s' % (left, right))
             else:
                 # assume int
                 left, right = int(left), int(right)
@@ -820,7 +819,7 @@ class Parser(object):
         if e1 == symbol.assignment_type:
             self.generate_op_code(OPCODE.DUMP)
         else:
-            raise PascalError('Array assignment type mismatch with ' + e1 + ' and ' + symbol.assignment_type)
+            raise Exception('Array assignment type mismatch with ' + e1 + ' and ' + symbol.assignment_type)
 
     def procedure_declaration(self):
         self.match('TK_PROCEDURE')

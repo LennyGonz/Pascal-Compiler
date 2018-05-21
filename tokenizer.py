@@ -3,8 +3,8 @@
 Return tokens
 """
 
-from pascal_loader import symbol_map, LETTER, RESERVED, SPACE, DIGIT, OPERATOR, EOL, QUOTE
-from pascal_loader import PascalError, DOT, SEMICOLON, COMMENT, COMMENT_TYPES
+from Pascal_Helper_Files import symbol_map, LETTER, RESERVED, SPACE, DIGIT, OPERATOR, EOL, QUOTE
+from Pascal_Helper_Files import DOT, SEMICOLON, COMMENT, COMMENT_TYPES
 
 TOKEN_NAME_PREFIX = 'TK_'
 TOKEN_STRING_LIT = TOKEN_NAME_PREFIX + 'STR_LIT'
@@ -47,7 +47,7 @@ TOKEN_RESERVED = TOKEN_NAME_PREFIX + 'RESERVED'
 string_store = set()
 
 
-class Token(object):
+class Scanner(object):
     """
     Token object class
     """
@@ -138,7 +138,7 @@ def case_quote(text_segment, row, column):
                 row += 1
             if character_value == EOL:
                 column += len(suffix)
-                raise PascalError('Not a valid string. (ln %i,col %i)' % (row, column))
+                raise Exception('Not a valid string. (ln %i,col %i)' % (row, column))
             suffix += character
 
 
@@ -203,7 +203,7 @@ def case_digit(text_segment):
                     suffix += character
                     index += 1
             else:
-                raise PascalError('Invalid literal.')
+                raise Exception('Invalid literal.')
         elif character.lower() == 'e':
             if text_segment[index + 1] == '-' or text_segment[index + 1] == '+':
                 suffix += character
@@ -213,7 +213,7 @@ def case_digit(text_segment):
                 suffix += character
                 index += 1
             else:
-                raise PascalError('Invalid literal.')
+                raise Exception('Invalid literal.')
         else:
             return suffix
 
@@ -244,7 +244,6 @@ def case_operator(text_segment):
 
 def get_token(pascal_file):
     """
-
     :param pascal_file: PascalFile
     :return:
     """
@@ -256,20 +255,20 @@ def get_token(pascal_file):
             word = case_letter(pascal_file.contents[index:])
             index += len(word)
             if reserved_tokens.get(word) is None:
-                token_list.append(Token(word, TOKEN_ID, row, column))
+                token_list.append(Scanner(word, TOKEN_ID, row, column))
             else:
-                token_list.append(Token(word, token_name(word), row, column))
+                token_list.append(Scanner(word, token_name(word), row, column))
             column += len(word)
         elif symbol == DIGIT:
             word = case_digit(pascal_file.contents[index:])
             index += len(word)
             if word.count('.') == 2:
-                token_list.append(Token(word, TOKEN_DATA_TYPE_RANGE, row, column))
+                token_list.append(Scanner(word, TOKEN_DATA_TYPE_RANGE, row, column))
             elif word.count('.') == 1:
-                token_list.append(Token(word, TOKEN_REAL_LIT, row, column))
+                token_list.append(Scanner(word, TOKEN_REAL_LIT, row, column))
                 # token_list.append(Token(word, TOKEN_DATA_TYPE_REAL, row, column))
             else:
-                token_list.append(Token(word, TOKEN_DATA_TYPE_INT, row, column))
+                token_list.append(Scanner(word, TOKEN_DATA_TYPE_INT, row, column))
             column += len(word)
         elif symbol == SPACE:
             column += 1
@@ -279,7 +278,7 @@ def get_token(pascal_file):
             index += len(word)
             if word[:2] in COMMENT_TYPES:
                 # checks for cases such as '//' or '(*'
-                token_list.append(Token(word, TOKEN_COMMENT, row, column))
+                token_list.append(Scanner(word, TOKEN_COMMENT, row, column))
             # elif word == '-' and pascal_file.contents[index:index + 1].isdigit():
             #     # a negative number
             #     number_part = case_digit(pascal_file.contents[index:])
@@ -287,15 +286,15 @@ def get_token(pascal_file):
             #     index += len(number_part)
             #     token_list.append(Token(word, TOKEN_DATA_TYPE_INT, row, column))
             else:
-                token_list.append(Token(word, operators_classifications[word], row, column))
+                token_list.append(Scanner(word, operators_classifications[word], row, column))
             column += len(word)
         elif symbol == QUOTE:
             word = case_quote(pascal_file.contents[index:], row, column)
             index += len(word)
             if len(word) == 3:
-                token_list.append(Token(str(word.replace("'", '')), TOKEN_CHARACTER, row, column))
+                token_list.append(Scanner(str(word.replace("'", '')), TOKEN_CHARACTER, row, column))
             else:
-                token_list.append(Token(word, TOKEN_STRING_LIT, row, column))
+                token_list.append(Scanner(word, TOKEN_STRING_LIT, row, column))
             column += len(word)
         elif symbol == EOL:
             index += 1
@@ -304,18 +303,18 @@ def get_token(pascal_file):
             column = 1
         elif symbol == DOT:
             index += 1
-            token_list.append(Token('.', TOKEN_DOT, row, column))
+            token_list.append(Scanner('.', TOKEN_DOT, row, column))
             column += 1
         elif symbol == SEMICOLON:
             index += 1
-            token_list.append(Token(';', TOKEN_SEMICOLON, row, column))
+            token_list.append(Scanner(';', TOKEN_SEMICOLON, row, column))
             column += 1
         elif symbol == COMMENT:
             word = case_comment(pascal_file.contents[index:])
             index += len(word)
-            token_list.append(Token(word, TOKEN_COMMENT, row, column))
+            token_list.append(Scanner(word, TOKEN_COMMENT, row, column))
             column += len(word)
         else:
-            raise PascalError('Unknown symbol: %s (ln %i, col %i)' % (pascal_file.contents[index], row, column))
-    token_list.append(Token('EOF', TOKEN_EOF, row, column))
+            raise Exception('Unknown symbol: %s (ln %i, col %i)' % (pascal_file.contents[index], row, column))
+    token_list.append(Scanner('EOF', TOKEN_EOF, row, column))
     return token_list
