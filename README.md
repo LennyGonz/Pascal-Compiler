@@ -1,8 +1,21 @@
 # Pascal Compiler
-This is a Pascal compiler built using Python, for Compiler Construction
+This is a Pascal compiler built using Python 2.7
+
+# Running this Compiler
+**Enter the command:** python run.py
+Inside the run.py file there are 4 examples
+<ol>
+<li> array example </li>
+<li> assignment example </li>
+<li> for-loop example </li>
+<li> if-loop example </li>
+<li> while-loop example</li>
+</ol>
+The first example is array, to see the other examples go into the run.py file and comment out the array example and uncomment 
+a SINGLE other command
 
 # Resources used for this project:
-* [Compiler Construction](https://www.tutorialspoint.com/compiler_design/index.htm)
+* [Compiler Construction](https://www.tutorialspoint.com/compiler_design/index.htm`)
 * [Pascal Keywords](http://wiki.freepascal.org/Reserved_words)
 * [Pascal Operators](http://www.tutorialspoint.com/pascal/pascal_operators.htm)
 * [Symbol Tables](http://en.wikipedia.org/wiki/Symbol_table)
@@ -106,5 +119,3 @@ to evaluate "cy+324". This gives an idea about how the parser operates.
 * In other cases, the parser converts the statements into byte-code
 * In the case of a compiler, it then hands them to the Code Generator to convert into machine code instructions
 * If you want a compiler for a different CPU or architecture, all you have to do is put a new code generator unit to translate the byte code into machine code for the new CPU
-
-## Scripts
