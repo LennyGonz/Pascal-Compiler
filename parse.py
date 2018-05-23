@@ -573,8 +573,6 @@ class Parser(object):
                     self.ip += 1
                 self.match(scanner.TOKEN_STRING_LIT)
 
-            # else:
-            #     raise Exception('writeln does not support %s', self.current_token.value_of)
             type_of = self.current_token.type_of
             if type_of == scanner.TOKEN_OPERATOR_COMMA:
                 self.match(scanner.TOKEN_OPERATOR_COMMA)
