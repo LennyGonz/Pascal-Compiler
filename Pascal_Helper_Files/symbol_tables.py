@@ -1,8 +1,5 @@
 # coding=utf-8
 
-
-# Notations from: http://www.cs.cornell.edu/courses/cs412/2008sp/lectures/lec12.pdf
-
 TYPE_VARIABLE = 'var'  # var a;
 TYPE_FUNCTION = 'func'  # (a + 1) == 2
 TYPE_PROCEDURE = 'pro'
@@ -10,7 +7,6 @@ TYPE_EXPRESSIONS = 'expr'  # a = 1.0;
 TYPE_STATEMENTS = 'stat'  # int pow(int n, int m)
 TYPE_PARAMETER = 'par'
 TYPE_ARRAY = 'arr'
-
 
 class SymbolObject(object):
     """
