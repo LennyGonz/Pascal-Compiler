@@ -6,11 +6,11 @@ var aBool : boolean;
 var aReal : real;
 
 begin
-    x := 20 + 20;
-    y := (5 + 5) * 2;
-    aBool := true;
-    aChar := 'a';
-    aReal := 1.64;
+    x := 10 + 10;
+    y := (15 + 15) * 2;
+    aBool := false;
+    aChar := 'L';
+    aReal := 1.14;
     intDiv := 5 div 2;
     writeln(x, x);
     writeln('(5 + 5) * 2 =', y);

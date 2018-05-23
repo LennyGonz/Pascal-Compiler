@@ -18,15 +18,6 @@ class SymbolObject(object):
     kind: var
     """
     def __init__(self, name, type_of_object, data_type, dp=None, attribute=None, others=None):
-        """
-
-        :param name: str
-        :param type_of_object: str
-        :param data_type: str
-        :param attribute: str
-        :param others: list
-        :return:
-        """
         self.name = name
         self.type_of_object = type_of_object
         self.data_type = data_type
