@@ -3,7 +3,7 @@ from __future__ import absolute_import
 
 import pprint
 
-from tokenizer import get_token # scanner
+from scanner import get_token # scanner
 from Pascal_Helper_Files.pascal_reader import PascalFile
 from parse import Parser # parser
 from emulator import Emulator # emulator
@@ -20,11 +20,12 @@ if __name__ == '__main__':
     # tokens = get_token(PascalFile(input_file_location='while_example.pas', output_location=''))
     
 
-    # This prints tokens, uncomment to see the generated tokens
+    # UNCOMMENT THE LINE BELOW TO TEST THE SCANNER --> YOU WILL SEE THE TOKENS
     # pretty_printer.pprint(tokens)
+    
     print '----------------------------------'
-    # setting verbose=True to parser will print to console as tokens are matched/warnings
-    # parser = Parser(token_list=tokens, verbose=True)
+
+    # parser = Parser(token_list=tokens, verbose=True) 
     parser = Parser(token_list=tokens)
     byte_array = parser.parse()
     # This prints the byte array, uncomment to see the bytearray
