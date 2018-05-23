@@ -19,9 +19,6 @@ class Emulator(object):
         self.data_pointer = 0
 
     def flush(self):
-        print '----------------------------------'
-        print 'Flushing standard out'
-        print '----------------------------------'
         for item in self.std_out:
             print item,
 
@@ -100,7 +97,6 @@ class Emulator(object):
             self.f_multiply()
             self.start()
         elif op == OPCODE.HALT:
-            print 'Finished simulating program.'
             self.flush()
             sys.exit()
         elif op == OPCODE.PUSH_CHAR:
@@ -138,7 +134,7 @@ class Emulator(object):
             self.start()
         else:
             print 'Stack', self.stack
-            raise PascalError('Emulator lacks support for opcode %i' % op)
+            raise Exception('Emulator lacks support for opcode %i' % op)
 
     def pushi(self):
         self.ip += 1
