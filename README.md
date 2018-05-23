@@ -2,6 +2,7 @@
 This is a Pascal compiler built using Python, for Compiler Construction
 
 # Resources used for this project:
+* [Compiler Construction](https://www.tutorialspoint.com/compiler_design/index.htm)
 * [Pascal Keywords](http://wiki.freepascal.org/Reserved_words)
 * [Pascal Operators](http://www.tutorialspoint.com/pascal/pascal_operators.htm)
 * [Symbol Tables](http://en.wikipedia.org/wiki/Symbol_table)
